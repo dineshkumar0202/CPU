@@ -1,6 +1,10 @@
 const dns = require('dns');
-// Force Google DNS to resolve MongoDB Atlas SRV records (fixes querySrv ECONNREFUSED locally)
-dns.setServers(['8.8.8.8', '8.8.4.4']);
+try {
+  // Force Google DNS to resolve MongoDB Atlas SRV records (fixes querySrv ECONNREFUSED locally)
+  dns.setServers(['8.8.8.8', '8.8.4.4']);
+} catch (err) {
+  console.warn('Could not set custom DNS servers, using system defaults:', err.message);
+}
 
 const dotenv = require('dotenv');
 // Load env variables immediately before other imports
